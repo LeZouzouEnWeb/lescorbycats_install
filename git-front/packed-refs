@@ -1,3 +1,7 @@
 # pack-refs with: peeled fully-peeled sorted 
-fbb64497dcdeb1947610c430fcc16cd58c085018 refs/remotes/origin/1-mise-en-service-de-symfony-et-de-twig
-fbb64497dcdeb1947610c430fcc16cd58c085018 refs/remotes/origin/main
+9a7dc96a979d73b97ec194c0fdbb035434a8f205 refs/remotes/origin/1-mise-en-service-de-symfony-et-de-twig
+daa3968b7f8adfc7788a3aac9d2b8879c2f2beb1 refs/remotes/origin/3-ajout-du-template-github
+cb0dc49dfbc0af99f146c60823b64842b127ea5c refs/remotes/origin/5-creation-de-la-page-daccuiel
+cb0dc49dfbc0af99f146c60823b64842b127ea5c refs/remotes/origin/DEVELOP
+c36b3b517c0e7cb8d72e10cbeeb5ee41caea9a0e refs/remotes/origin/Eric/stimulus-bundle
+cb0dc49dfbc0af99f146c60823b64842b127ea5c refs/remotes/origin/main
