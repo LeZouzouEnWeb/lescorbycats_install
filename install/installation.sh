@@ -43,8 +43,10 @@ echo
 echo -e "'\e[1m Installation de Symfony \e[0m'"
 echo "---------------------------------------------------"
 pause s 1 m
+
 mkdir $folder_rel_serveur
 cd $folder_rel_serveur
+
 composer create-project symfony/skeleton:"$version_symfony" .
 
 pause s 1 m
@@ -52,6 +54,15 @@ composer require webapp --quiet
 
 pause s 2 m
 composer require "symfony/var-exporter:7.0.4"
+
+pause s 2 m
+composer require symfony/webpack-encore-bundle
+
+pause s 2 m
+npm install sass-loader sass --save-dev
+
+pause s 2 m
+npm install typescript ts-loader --save-dev
 
 pause s 1 m
 echo " ** Installation effectué**"
@@ -68,13 +79,21 @@ echo "** Fichier compose.yaml est prêt **"
 echo
 
 echo "Voulez-vous générer Docker ? "
-read -n 1 -rp $'\e[31m\e[1m[Y]\e[0mes / \e[31m\e[1m[N]\e[0mo (is default) > ' val_bd
+read -n 1 -rp $'\e[31m\e[1m[Y]\e[0mes / \e[31m\e[1m[N]\e[0mo (is default) > ' valdb
 line
 line -t ""
 
-if [[ "${val^^}" == "Y" ]]; then
+echo ${valdb^^}
+pause s 2 m
+
+if [[ "${valdb^^}" == "Y" ]]; then
+    echo -e "'\e[1m Creation des éléments Docker\e[0m'"
+    echo "-----------------------------"
+    pause s 2 m
     source "$layout/buildnews.sh"
 fi
+
+pause s 2 m
 cd $folder_rel_serveur
 
 pause s 5 m
