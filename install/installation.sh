@@ -2,6 +2,9 @@
 
 # echo $folder_rel_serveur
 clear
+
+sed -i "s/--show-private/--show-hidden/g" ~/.vscode/extensions/thenouillet.symfony-vscode-1.0.2/out/symfony/provider/ConsoleContainerProvider.js
+
 cd $myfolder
 
 if [ -d "$folder_rel_serveur" ]; then
@@ -37,6 +40,7 @@ pause s 2
 sudo apt-get update
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 nvm install $version_nodejs
+nvm use node 22
 
 echo -e "'\e[1m Ajout d'un module php 8.3 '$folder_serveur'\e[0m'"
 echo "---------------------------------------------------"
@@ -77,7 +81,8 @@ pause s 2
 npm install typescript ts-loader --save-dev
 
 pause s 2
-npm install
+rm -rf node_modules/ package-lock.json
+npm i -f
 
 pause s 2
 echo " ** Installation effectué**"

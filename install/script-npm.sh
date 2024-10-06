@@ -23,7 +23,6 @@ EOF
 
 # Écrire le contenu par défaut dans le fichier webpack.config.js
 cat >"$file_rel_webpack" <<EOF
-
 const Encore = require("@symfony/webpack-encore");
 
 //Configurez manuellement l'environnement d'exécution s'il n'est pas déjà configuré par la commande "encore".
@@ -48,6 +47,9 @@ Encore
    */
   .addEntry("app", "./assets/app.ts") //Fichier JS/TS
   .addStyleEntry("styles", "./assets/styles/app.scss")
+
+  // Activer Stimulus (important si vous utilisez le Stimulus bundle de Symfony)
+  .enableStimulusBridge("./assets/controllers.json")
 
   //Activer TypeScript et Sass
   .enableTypeScriptLoader()
@@ -98,5 +100,36 @@ Encore
 //.autoProvidejQuery()
 
 module.exports = Encore.getWebpackConfig();
+
+
+EOF
+
+# Écrire le contenu par défaut dans le fichier package.json
+cat >"$file_rel_package" <<EOF
+{
+    "devDependencies": {
+        "@babel/core": "^7.17.0",
+        "@babel/preset-env": "^7.16.0",
+        "@symfony/webpack-encore": "^5.0.0",
+        "@symfony/stimulus-bridge": "^3.2.2",
+        "core-js": "^3.38.0",
+        "regenerator-runtime": "^0.13.9",
+        "sass": "^1.79.4",
+        "sass-loader": "^16.0.2",
+        "ts-loader": "^9.5.1",
+        "typescript": "^5.6.2",
+        "webpack": "^5.74.0",
+        "webpack-cli": "^5.1.0",
+        "webpack-notifier": "^1.15.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    }
+}
 
 EOF

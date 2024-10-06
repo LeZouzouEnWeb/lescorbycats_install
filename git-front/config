@@ -1,0 +1,31 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = git@github.com-home:LeZouzouEnWeb/lescorbycats_frontend.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
+	vscode-merge-base = origin/main
+[branch "1-mise-en-service-de-symfony-et-de-twig"]
+	remote = origin
+	merge = refs/heads/1-mise-en-service-de-symfony-et-de-twig
+	github-pr-base-branch = "LeZouzouEnWeb#lescorbycats_frontend#main"
+	vscode-merge-base = origin/1-mise-en-service-de-symfony-et-de-twig
+[branch "3-ajout-du-template-github"]
+	remote = origin
+	merge = refs/heads/3-ajout-du-template-github
+	vscode-merge-base = origin/3-ajout-du-template-github
+[branch "DEVELOP"]
+	remote = origin
+	merge = refs/heads/DEVELOP
+	github-pr-base-branch = "LeZouzouEnWeb#lescorbycats_frontend#main"
+	vscode-merge-base = origin/DEVELOP
+[branch "5-creation-de-la-page-daccuiel"]
+	remote = origin
+	merge = refs/heads/5-creation-de-la-page-daccuiel
+	github-pr-base-branch = "LeZouzouEnWeb#lescorbycats_frontend#DEVELOP"
+	vscode-merge-base = origin/5-creation-de-la-page-daccuiel
