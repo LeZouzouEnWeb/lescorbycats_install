@@ -1,0 +1,11 @@
+0000000000000000000000000000000000000000 fbb64497dcdeb1947610c430fcc16cd58c085018 ecorbisiersimplon <ecorbisier.simplon@gmail.com> 1728223145 +0200	clone: from github.com-home:LeZouzouEnWeb/lescorbycats_frontend.git
+fbb64497dcdeb1947610c430fcc16cd58c085018 fbb64497dcdeb1947610c430fcc16cd58c085018 ecorbisiersimplon <ecorbisier.simplon@gmail.com> 1728223469 +0200	checkout: moving from main to 1-mise-en-service-de-symfony-et-de-twig
+fbb64497dcdeb1947610c430fcc16cd58c085018 01814c5ef69fdc08fef85586c5fc8ae5d08ebf46 ecorbisiersimplon <ecorbisier.simplon@gmail.com> 1728223505 +0200	commit: Création du squellette
+01814c5ef69fdc08fef85586c5fc8ae5d08ebf46 fbb64497dcdeb1947610c430fcc16cd58c085018 ecorbisiersimplon <ecorbisier.simplon@gmail.com> 1728223517 +0200	checkout: moving from 1-mise-en-service-de-symfony-et-de-twig to main
+fbb64497dcdeb1947610c430fcc16cd58c085018 e0e3a4cc112fedd28dd099c3081e0d52393b7940 ecorbisiersimplon <ecorbisier.simplon@gmail.com> 1728223565 +0200	commit: P0001 Ajout de nodes modules dans Gitignore
+e0e3a4cc112fedd28dd099c3081e0d52393b7940 755176a0687d018fb036e158b96bd85498f182c1 ecorbisiersimplon <ecorbisier.simplon@gmail.com> 1728223795 +0200	checkout: moving from main to 3-ajout-du-template-github
+755176a0687d018fb036e158b96bd85498f182c1 daa3968b7f8adfc7788a3aac9d2b8879c2f2beb1 ecorbisiersimplon <ecorbisier.simplon@gmail.com> 1728223833 +0200	commit: P0003 - ajout du template Github pour les prochains tickets
+daa3968b7f8adfc7788a3aac9d2b8879c2f2beb1 e0e3a4cc112fedd28dd099c3081e0d52393b7940 ecorbisiersimplon <ecorbisier.simplon@gmail.com> 1728223954 +0200	checkout: moving from 3-ajout-du-template-github to main
+e0e3a4cc112fedd28dd099c3081e0d52393b7940 cb0dc49dfbc0af99f146c60823b64842b127ea5c ecorbisiersimplon <ecorbisier.simplon@gmail.com> 1728224011 +0200	pull --tags origin main: Fast-forward
+cb0dc49dfbc0af99f146c60823b64842b127ea5c cb0dc49dfbc0af99f146c60823b64842b127ea5c ecorbisiersimplon <ecorbisier.simplon@gmail.com> 1728224030 +0200	checkout: moving from main to DEVELOP
+cb0dc49dfbc0af99f146c60823b64842b127ea5c cb0dc49dfbc0af99f146c60823b64842b127ea5c ecorbisiersimplon <ecorbisier.simplon@gmail.com> 1728224166 +0200	checkout: moving from DEVELOP to 5-creation-de-la-page-daccuiel
