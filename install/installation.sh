@@ -68,10 +68,16 @@ pause s 2
 composer require symfony/webpack-encore-bundle
 
 pause s 2
+composer require symfony/stimulus-bundle
+
+pause s 2
 npm install sass-loader sass --save-dev
 
 pause s 2
 npm install typescript ts-loader --save-dev
+
+pause s 2
+npm install
 
 pause s 2
 echo " ** Installation effectué**"
