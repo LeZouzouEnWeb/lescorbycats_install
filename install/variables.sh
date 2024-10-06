@@ -18,6 +18,8 @@ layout="$PWD/install"
 
 # Vérifier si le fichier .env n'existe pas
 file_env=".env"
+file_tsconf="tsconfig.json"
+file_webpack="webpack.config.js"
 
 folder_rel_bin=~/bin
 folder_serveur="serveur-frontend"
@@ -29,6 +31,8 @@ file_rel_bashrc=~/.bashrc
 file_rel_bashal=~/.bash_aliases
 file_rel_URL=$folder_rel_bin/URL
 file_rel_env="$folder_rel_serveur/$file_env"
+file_rel_tsconf="$folder_rel_serveur/$file_tsconf"
+file_rel_webpack="$folder_rel_serveur/$file_webpack"
 file_rel_compose="$folder_rel_serveur/compose.yaml"
 file_rel_compose_o="$folder_rel_serveur/compose.override.yaml"
 file_rel_dockerfile="$folder_rel_serveur/Dockerfile"

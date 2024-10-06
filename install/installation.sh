@@ -68,6 +68,14 @@ pause s 1 m
 echo " ** Installation effectué**"
 echo
 
+echo -e "'\e[1m Écrire le contenu par défaut dans le fichier tsconfig et webpack\e[0m'"
+echo "---------------------------------------------------"
+pause s 1 m
+# Écrire le contenu par défaut dans les fichiers tsconfig et webpack
+source "$layout/script-npm.sh"
+echo "** Fichier tsconfig et webpack sont prêt **"
+echo
+
 # Mise à jour de env et n° de version
 source "$layout/script-default.sh"
 
