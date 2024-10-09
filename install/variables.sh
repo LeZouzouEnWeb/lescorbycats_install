@@ -8,6 +8,7 @@ version_adminer="4.8.1"
 version_nodejs="22"
 
 port_symfony=8088
+port_wordpress=8090
 
 name="lescorbycats"
 basedb="mariabd"

@@ -34,7 +34,9 @@ done
 
 # mise à jour de node JS
 # Mise à jour des dépôts et installation de Node.js
-sudo apt update
+sudo apt update -y
+sudo apt upgrade -y
+
 
 # Installation de NVM (Node Version Manager)
 
@@ -73,6 +75,11 @@ pause s 5
 sudo apt install php8.3 -y
 pause s 5
 sudo apt install php8.3-xml -y
+
+pause s 5
+sudo apt install php8.3-mysql -y
+sudo systemctl restart apache2 -y
+
 echo
 echo "** module php 8.3 est prêt **"
 echo
