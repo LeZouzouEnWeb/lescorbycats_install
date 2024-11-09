@@ -1,0 +1,150 @@
+@mixin heading-shadow($colour: $bck-color-primary, $shadow-size: $heading-shadow-size) {
+
+    // color: $colour;
+    @if ($colour !='none') {
+        text-shadow: $shadow-size lightness-shift($bck-color-primary);
+    }
+
+    @else {
+        text-shadow: $shadow-size #000;
+    }
+}
+
+@mixin heading-contour($margin: 'null', $border: 'null', $padding: 'null', $radius: 'null', $name-contour: $name-contour) {
+    @for $i from 0 to length($name-contour) {
+        $contour: '';
+
+        @if($i==0) {
+            $contour: $margin
+        }
+
+        @if($i==1) {
+            $contour: $border
+        }
+
+        @if($i==2) {
+            $contour: $padding
+        }
+
+        @if($i==3) {
+            $contour: $radius
+        }
+
+        @if ($contour !='null') {
+            @if ($contour =='') {
+                #{nth($name-contour, $i + 1)}: map-get($heading-contour, nth($name-contour, $i + 1));
+            }
+
+            @else {
+                #{nth($name-contour, $i + 1)}: #{$contour};
+            }
+        }
+    }
+}
+
+@mixin flexible-box() {
+    $v: ("flex-wrap", "nowrap",
+        "flex-wrap", "wrap",
+        "flex-direction", "column",
+        "display", "none"
+    );
+    $k: ("non": 1,
+        "oui": 3,
+        "colonne": 5,
+        "badge": 7);
+
+    // display: flex;
+    @each $key,
+    $value in $k {
+        &_#{$key} {
+            @if ($value < 7) {
+                display: flex;
+
+                div {
+                    padding-right: 5px;
+                }
+            }
+
+            #{nth($v, $value)}: #{nth($v, $value + 1)};
+
+
+        }
+
+
+    }
+}
+
+@mixin nav-logo {
+    position: relative;
+    width: 0;
+    left: -50vw;
+    transition: 1.9s all .2s;
+}
+
+// PERMET DE CHANGER LE CONTOUR TEXTE D'UN BOUTON TYPE INPUT OU D'UN LIEN A
+// PERMET DE CHANGER LE CONTOUR TEXTE D'UN EMOTICON i
+@mixin btn-hover($element: null) {
+    @if ($element ==nth($name-element, 1)) {
+        text-shadow:
+            0px -1px 1px #000,
+            0px 1px 1px white;
+        color: hsl(0deg 0% 90%);
+    }
+
+    @else {
+        @if ($element ==nth($name-element, 2)) {
+            text-shadow: -1px -1px 0px #000, 1px 1px 0px #767575;
+        }
+    }
+}
+
+
+// PERMET DE GERER DIFFERNENT ECRAN
+@mixin pt-mobil-max {
+    @media screen and (max-width: map-get($breakpoints, pt-mobil)) {
+        @content;
+    }
+}
+
+@mixin mobil-max {
+    @media screen and (max-width: map-get($breakpoints, mobil)) {
+        @content;
+    }
+}
+
+@mixin gd-mobil-max {
+    @media screen and (max-width: map-get($breakpoints, gd-mobil)) {
+        @content;
+    }
+}
+
+
+@mixin tablet-max {
+    @media screen and (max-width: map-get($breakpoints, tablet)) {
+        @content;
+    }
+}
+
+@mixin pt-screen-min {
+    @media screen and (min-width: map-get($breakpoints, pt-screen-min)) {
+        @content;
+    }
+}
+
+@mixin pt-screen-max {
+    @media screen and (max-width: map-get($breakpoints, pt-screen)) {
+        @content;
+    }
+}
+
+@mixin gd-screen-min {
+    @media screen and (min-width: map-get($breakpoints, gd-screen-min)) {
+        @content;
+    }
+}
+
+@mixin very-gd-screen-min {
+    @media screen and (min-width: map-get($breakpoints, very-gd-screen-min)) {
+        @content;
+    }
+}

@@ -1,0 +1,24 @@
+.scribo-information {
+    // display: none;
+    height: 0px;
+    width: 0px;
+}
+
+.w3-modal {
+    z-index: 5 !important;
+}
+
+#pwd_div {
+    display: flex;
+    align-content: center;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    input[type="checkbox"] {
+        display: none;
+    }
+    .pwd__label {
+        cursor: pointer;
+        margin: 0 0 0 5px;
+    }
+}
