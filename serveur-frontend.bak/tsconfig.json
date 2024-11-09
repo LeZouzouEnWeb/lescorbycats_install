@@ -1,0 +1,19 @@
+
+{
+    "compilerOptions": {
+        "target": "es5", // Version ECMAScript cible
+        "module": "esnext", // Type de module à utiliser
+        "strict": true, // Activer les vérifications strictes
+        "esModuleInterop": true, // Interopérabilité avec les modules ES
+        "skipLibCheck": true, // Ignorer la vérification des types dans les fichiers de bibliothèque
+        "forceConsistentCasingInFileNames": true, // Consistance dans la casse des noms de fichiers
+        "sourceMap": true // Générer les sourcemaps pour faciliter le débogage
+    },
+    "include": [
+        "assets/**/*.ts" // Chemin vers les fichiers TypeScript à compiler
+    ],
+    "exclude": [
+        "node_modules" // Exclure le dossier node_modules
+    ]
+}
+
