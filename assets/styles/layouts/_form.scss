@@ -1,0 +1,70 @@
+// #id01_b {
+//     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+//     text-shadow: initial;
+//     color: initial;
+//     .w3-avatar {
+//         width: 90px;
+//     }
+//     fieldset {
+//         * {
+//             display: flex;
+//             flex-direction: column;
+//         }
+//     }
+// }
+
+.w3-modal {
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    text-shadow: initial;
+    color: initial;
+
+    .w3-modal-content {
+        background-color: hsl(301deg 59.24% 82.61%);
+        .w3-avatar {
+            display: flex;
+            flex-wrap: nowrap;
+            padding: 10px;
+            width: 110px;
+        }
+        .title {
+            display: flex;
+            justify-content: center;
+        }
+        .modal-patienter {
+            font-size: 20px;
+            height: 80px;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: center;
+            justify-content: center;
+            img {
+                width: 20px;
+                height: auto;
+                display: inline;
+            }
+        }
+        form {
+            fieldset {
+                // background-color: color-primary($s: 60%, $l: 82%);
+                background-color: hsl(0deg 0% 92.91%);
+                .w3-input {
+                    width: 80%;
+                }
+                label {
+                    margin-bottom: 10px;
+                }
+            }
+            .erreur {
+                display: none;
+            }
+        }
+        & > div:last-child,
+        & > div:first-child {
+            background-color: hsl(301deg 46.57% 35.99%) !important;
+        }
+    }
+}
+
+.elementor-element--promotion {
+    display: none;
+}

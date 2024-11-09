@@ -1,0 +1,111 @@
+html {
+	font-size: map-get($font-size, html);
+	-webkit-tap-highlight-color: #000;
+}
+
+body {
+	font-size: map-get($font-size, heading);
+	color: $color-primary;
+	background-color: $bck-color-body;
+	@include heading-shadow("none");
+}
+
+.wrapper {
+	// $contour: 0px, 'null', 0px 5px;
+	@include heading-contour($margin: 0px, $padding: 0px 5px);
+
+	&-shadow {
+		//@extend %heading-box-shadow;
+	}
+
+	&-box {
+		@include heading-contour($margin: 0px 5px);
+
+		@include gd-screen-min {
+			max-width: 1200px;
+			min-width: 801px;
+			width: auto;
+		}
+
+		@include very-gd-screen-min {
+			margin: 0 auto;
+		}
+	}
+
+	&-box:not(.scribo-nav):not(footer),
+	&-contend {
+		background-color: $bck-color-primary;
+	}
+
+	&-contend {
+		@include heading-contour($margin: 8px 5px -2px, $border: 0px inset #000, $padding: 10px 5px);
+	}
+}
+
+main {
+	display: block;
+}
+
+/* Do not show the outline on the skip link target. */
+#primary {
+	&[tabindex="-1"]:focus {
+		outline: 0;
+	}
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	// font-weight: bold !important;
+}
+
+img {
+	.center-block {
+		@extend %center-block;
+	}
+}
+
+input[type="checkbox"] {
+	cursor: pointer;
+}
+
+.elementor-widget-container {
+	ul {
+		list-style: none;
+		li {
+			&::before {
+				font-family: "Font Awesome 6 Free";
+				font-weight: 900;
+				content: "\f1b0"; /* code de l'icône souhaitée */
+				margin-right: 5px; /* ajouter un espace entre l'icône et le texte */
+				animation-name: rotate-icon;
+				animation-duration: 2s;
+				animation-timing-function: linear;
+				// animation-iteration-count: infinite;
+				display: inline-block;
+				transform: rotate(45deg);
+			}
+		}
+	}
+}
+@keyframes rotate-icon {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(45deg);
+	}
+}
+
+select.readonly {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	text-indent: 1px;
+	border: none;
+	color: rgb(51, 51, 51);
+	position: relative;
+	left: -2px;
+}

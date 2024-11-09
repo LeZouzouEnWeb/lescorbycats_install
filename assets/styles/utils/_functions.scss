@@ -1,0 +1,14 @@
+@function lightness-shift($colour) {
+	@if (lightness($colour) < 25%) {
+		@return lighten($colour, 10%);
+	}
+
+	@else {
+		@return darken($colour, 10%);
+	}
+}
+
+@function color-primary($s: 65%, $l: 16%, $a: 1, $b: $bck-color-primary) {
+	@debug change-color($b, $saturation: $s, $lightness: $l, $alpha: $a);
+	@return change-color($b, $saturation: $s, $lightness: $l, $alpha: $a);
+}

@@ -106,6 +106,9 @@ pause s 5
 composer require symfony/stimulus-bundle
 
 pause s 5
+composer require symfonycasts/sass-bundle
+
+pause s 5
 npm install sass-loader sass --save-dev
 
 pause s 5

@@ -1,0 +1,64 @@
+$bck-color-nav: color-primary(
+	$l: 41%,
+	$a: 0.85,
+);
+$bck-color-logo: color-primary(
+	$s: 50%,
+	$l: 66%,
+);
+$bck-color-body: color-primary(
+	$s: 35%,
+	$l: 40%,
+);
+$bck-color-a-nav: color-primary(
+	$s: 60%,
+	$l: 35%,
+);
+$color-100-30: color-primary(
+	$s: 100%,
+	$l: 30%,
+);
+
+$color-primary: #afafaf;
+
+$heading-shadow-size: 0px 0px 2px;
+
+$heading-contour: (
+	margin: 0px auto,
+	border: 0px,
+	padding: 5px,
+	radius: 0px,
+);
+$name-contour: "margin", "border", "padding", "border-radius";
+$name-element: "a", "i", "div", "span";
+
+$font-size: (
+	html: 12px,
+	logo: 7rem,
+	menu: 1.5rem,
+	heading: 1.7rem,
+	label: 2rem,
+	footer: 0.8rem,
+);
+
+%heading-box-shadow {
+	box-shadow: 1px 1px 0 0 hsl(0, 0%, 30%), 1.5px 1.5px 0 0 hsl(0, 0%, 42%, 90%), 2px 2px 0 0 hsl(0, 1%, 54%, 90%),
+		2.5px 2.5px 0 0 hsl(0, 0%, 66%, 90%), 3px 3px 0 0 hsl(0, 0%, 78%, 90%), 4px 4px 8px 1px hsl(0, 0%, 100%, 34%);
+}
+
+$breakpoints: (
+	pt-mobil: 399px,
+	mobil: 449px,
+	gd-mobil: 500px,
+	tablet: 767px,
+	pt-screen-min: 768px,
+	pt-screen: 1049px,
+	gd-screen-min: 1050px,
+	very-gd-screen-min: 1205px,
+);
+
+%center-block {
+	max-width: 99%;
+	margin: 0px auto;
+	display: block;
+}
