@@ -1,0 +1,42 @@
+name: Add Ticket Number to PR Title
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  update-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check and Update PR Title
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prTitle = '${{ github.event.pull_request.title }}';
+            const prNumber = ${{ github.event.pull_request.number }};
+            console.log(`Current PR Title: ${prTitle}`);
+            console.log(`PR Number: ${prNumber}`);
+
+            // Regex pour vérifier si le titre contient un numéro de ticket (ex: TICKET-123)
+            const ticketPattern = /Ticket_\d+/i;
+
+            if (!ticketPattern.test(prTitle)) {
+              const newTitle = `Ticket_${prNumber} ${prTitle}`;
+              console.log(`Updating PR Title to: ${newTitle}`);
+
+              // Mettre à jour le titre de la PR
+              await github.rest.pulls.update({
+                owner: '${{ github.repository_owner }}',
+                repo: '${{ github.event.repository.name }}',
+                pull_number: prNumber,
+                title: newTitle
+              });
+
+              console.log(`Titre de la PR mis à jour : ${newTitle}`);
+            } else {
+              console.log('Le titre contient déjà un numéro de ticket.');
+            }
