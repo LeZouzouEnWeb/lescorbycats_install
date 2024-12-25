@@ -21,26 +21,31 @@ jobs:
               console.log(`Current PR Title: ${prTitle}`);
               console.log(`PR Number: ${prNumber}`);
 
-              // Étape 1 : Supprimer le préfixe "Eric CORBISIER//" s'il existe
+              // Étape 1 : Vérifier si le titre contient déjà un tag [Ticket_X] ou [PR_X]
+              if (/\[(Ticket|PR)_\d+\]/.test(prTitle)) {
+                console.log('PR title already contains a Ticket or PR tag. No update needed.');
+                return;
+              }
+
+              // Étape 2 : Supprimer le préfixe "Eric CORBISIER//" s'il existe
               let cleanedTitle = prTitle.replace(/Eric CORBISIER\/\/\s*/i, '').trim();
               console.log(`Cleaned PR Title: ${cleanedTitle}`);
 
-              // Étape 2 : Extraire un numéro de ticket au début du titre
+              // Étape 3 : Extraire un numéro de ticket au début du titre
               let ticketMatch = cleanedTitle.match(/^(\d+)\s+/);
-
               let ticketNumber = ticketMatch ? `Ticket_${ticketMatch[1]}` : `PR_${prNumber}`;
               console.log(`Extracted Ticket Number: ${ticketNumber}`);
 
-              // Étape 3 : Retirer le numéro de ticket du début s'il existe
+              // Étape 4 : Retirer le numéro de ticket du début s'il existe
               if (ticketMatch) {
                 cleanedTitle = cleanedTitle.replace(ticketMatch[0], '').trim();
               }
 
-              // Étape 4 : Reformater le titre
+              // Étape 5 : Reformater le titre
               let newTitle = `[${ticketNumber}] ${cleanedTitle}`;
               console.log(`Updating PR Title to: ${newTitle}`);
 
-              // Étape 5 : Mettre à jour le titre sur GitHub
+              // Étape 6 : Mettre à jour le titre sur GitHub
               await github.pulls.update({
                 owner: '${{ github.repository_owner }}',
                 repo: '${{ github.event.repository.name }}',
