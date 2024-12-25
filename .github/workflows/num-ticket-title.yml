@@ -5,37 +5,41 @@ on:
     types: [opened, edited, synchronize]
 
 permissions:
-  pull-requests: write
+    pull-requests: write
 
 jobs:
-  update-title:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Update PR Title
-        uses: actions/github-script@v4
-        with:
-          github-token: ${{ secrets.REPO_ACCESS_TOCKEN }}
-          script: |
-            const prTitle = '${{ github.event.pull_request.title }}';
-            const prNumber = ${{ github.event.pull_request.number }};
-            console.log(`Current PR Title: ${prTitle}`);
-            console.log(`PR Number: ${prNumber}`);
+    update-title:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Update PR Title
+          uses: actions/github-script@v4
+          with:
+            github-token: ${{ secrets.REPO_ACCESS_TOCKEN }}
+            script: |
+                const prTitle = '${{ github.event.pull_request.title }}';
+                const prNumber = ${{ github.event.pull_request.number }};
+                console.log(`Current PR Title: ${prTitle}`);
+                console.log(`PR Number: ${prNumber}`);
 
-            // Regex to check if the title already has a ticket number (e.g. Ticket_123)
-            const ticketPattern = /Ticket_\d+/i;
+                // Regex to remove "Eric CORBISIER//" from the title
+                const cleanedTitle = prTitle.replace(/Eric CORBISIER\/\/\s*/i, '').trim();
+                console.log(`Cleaned PR Title: ${cleanedTitle}`);
 
-            if (!ticketPattern.test(prTitle)) {
-              const newTitle = `Ticket_${prNumber} ${prTitle}`;
-              console.log(`Updating PR Title to: ${newTitle}`);
+                // Regex to check if the title already has a ticket number (e.g. [Ticket_123])
+                const ticketPattern = /\[Ticket_\d+\]/i;
 
-              // Utilisation correcte de l'API GitHub
-              await github.pulls.update({
-                owner: '${{ github.repository_owner }}',
-                repo: '${{ github.event.repository.name }}',
-                pull_number: prNumber,
-                title: newTitle
-              });
-              console.log(`PR title updated to: ${newTitle}`);
-            } else {
-              console.log('The title already contains a ticket number.');
-            }
+                if (!ticketPattern.test(cleanedTitle)) {
+                const newTitle = `[Ticket_${prNumber}] ${cleanedTitle}`;
+                console.log(`Updating PR Title to: ${newTitle}`);
+
+                // Utilisation de l'API GitHub pour mettre à jour le titre
+                await github.pulls.update({
+                    owner: '${{ github.repository_owner }}',
+                    repo: '${{ github.event.repository.name }}',
+                    pull_number: prNumber,
+                    title: newTitle
+                });
+                console.log(`PR title updated to: ${newTitle}`);
+                } else {
+                console.log('The title already contains a ticket number.');
+                }
