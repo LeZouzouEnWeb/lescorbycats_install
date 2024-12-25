@@ -2,6 +2,11 @@ name: Assign Ticket Number
 on:
   pull_request:
     types: [opened]
+  workflow_dispatch:
+
+permissions:
+  pull-requests: read
+  contents: read
 
 jobs:
   assign-ticket:
