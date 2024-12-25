@@ -31,21 +31,25 @@ jobs:
               let cleanedTitle = prTitle.replace(/Eric CORBISIER\/\/\s*/i, '').trim();
               console.log(`Cleaned PR Title: ${cleanedTitle}`);
 
-              // Étape 3 : Extraire un numéro de ticket au début du titre
+              // Étape 3 : Supprimer tout ce qui est avant '//' ou '/'
+              cleanedTitle =  cleanedTitle.replace(/.*\/\/\s*|.*\/\s*/g, '').trim();
+              console.log(`Cleaned PR Title: ${cleanedTitle}`);
+
+              // Étape 4 : Extraire un numéro de ticket au début du titre
               let ticketMatch = cleanedTitle.match(/^(\d+)\s+/);
               let ticketNumber = ticketMatch ? `Ticket_${ticketMatch[1]}` : `PR_${prNumber}`;
               console.log(`Extracted Ticket Number: ${ticketNumber}`);
 
-              // Étape 4 : Retirer le numéro de ticket du début s'il existe
+              // Étape 5 : Retirer le numéro de ticket du début s'il existe
               if (ticketMatch) {
                 cleanedTitle = cleanedTitle.replace(ticketMatch[0], '').trim();
               }
 
-              // Étape 5 : Reformater le titre
+              // Étape 6 : Reformater le titre
               let newTitle = `[${ticketNumber}] ${cleanedTitle}`;
               console.log(`Updating PR Title to: ${newTitle}`);
 
-              // Étape 6 : Mettre à jour le titre sur GitHub
+              // Étape 7 : Mettre à jour le titre sur GitHub
               await github.pulls.update({
                 owner: '${{ github.repository_owner }}',
                 repo: '${{ github.event.repository.name }}',
