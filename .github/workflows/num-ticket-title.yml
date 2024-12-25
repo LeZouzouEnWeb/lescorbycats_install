@@ -17,10 +17,10 @@ jobs:
                 const prNumber = ${{ github.event.pull_request.number }};
 
                 // Regex pour vérifier si le titre contient un numéro de ticket (ex: TICKET-123)
-                const ticketPattern = /ticket_\d+/i;
+                const ticketPattern = /Ticket_\d+/i;
 
                 if (!ticketPattern.test(prTitle)) {
-                const newTitle = `ticket_${prNumber} ${prTitle}`;
+                const newTitle = `Ticket_${prNumber} ${prTitle}`;
 
                 // Mettre à jour le titre de la PR
                 await github.rest.pulls.update({
