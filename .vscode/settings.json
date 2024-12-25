@@ -1,6 +1,9 @@
 {
   "commentTranslate.source": "Google",
   "twiggy.framework": "ignore",
+  "terminal.integrated.env.windows": {
+    "PATH": "C:\\wamp64\\bin\\php\\php8.3.14;C:\\composer;C:\\Users\\eric\\scoop\\apps\\symfony-cli\\5.10.5;%PATH%"
+  }
   "cSpell.words": [
     "lescorbycats",
     "symfonycasts",
