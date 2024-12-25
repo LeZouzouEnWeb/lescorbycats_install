@@ -11,7 +11,7 @@ jobs:
   update-title:
     runs-on: ubuntu-latest
     steps:
-      - name: Check and Update PR Title
+      - name: Update PR Title
         uses: actions/github-script@v4
         with:
           github-token: ${{ secrets.REPO_ACCESS_TOCKEN }}
@@ -21,22 +21,25 @@ jobs:
             console.log(`Current PR Title: ${prTitle}`);
             console.log(`PR Number: ${prNumber}`);
 
-            // Regex pour vérifier si le titre contient un numéro de ticket (ex: TICKET-123)
+            // Regex to check if the title already has a ticket number (e.g. Ticket_123)
             const ticketPattern = /Ticket_\d+/i;
 
             if (!ticketPattern.test(prTitle)) {
               const newTitle = `Ticket_${prNumber} ${prTitle}`;
               console.log(`Updating PR Title to: ${newTitle}`);
 
-              // Mettre à jour le titre de la PR
-              await github.rest.pulls.update({
-                owner: '${{ github.repository_owner }}',
-                repo: '${{ github.event.repository.name }}',
-                pull_number: prNumber,
-                title: newTitle
-              });
-
-              console.log(`Titre de la PR mis à jour : ${newTitle}`);
+              // Vérifiez si l'API 'github.rest.pulls.update' existe avant de l'utiliser
+              if (github.rest && github.rest.pulls && github.rest.pulls.update) {
+                await github.rest.pulls.update({
+                  owner: '${{ github.repository_owner }}',
+                  repo: '${{ github.event.repository.name }}',
+                  pull_number: prNumber,
+                  title: newTitle
+                });
+                console.log(`PR title updated to: ${newTitle}`);
+              } else {
+                console.log('Error: github.rest.pulls.update is not available.');
+              }
             } else {
-              console.log('Le titre contient déjà un numéro de ticket.');
+              console.log('The title already contains a ticket number.');
             }
