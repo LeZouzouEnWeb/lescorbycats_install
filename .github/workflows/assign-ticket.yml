@@ -16,7 +16,7 @@ jobs:
         id: assign
         uses: actions/github-script@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.REPO_ACCESS_TOCKEN }}
           script: |
             // Extraire le numéro de pull request comme entier
             const prNumber = parseInt('${{ github.event.pull_request.number }}', 10);

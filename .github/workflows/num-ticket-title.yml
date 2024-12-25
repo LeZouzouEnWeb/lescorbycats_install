@@ -14,7 +14,7 @@ jobs:
       - name: Check and Update PR Title
         uses: actions/github-script@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.REPO_ACCESS_TOCKEN }}
           script: |
             const prTitle = '${{ github.event.pull_request.title }}';
             const prNumber = ${{ github.event.pull_request.number }};
