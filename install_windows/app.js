@@ -13,7 +13,7 @@ const server = http.createServer(app);
 const io = socketIo(server);
 const port = 3000;
 
-
+const { spawn } = require('child_process');
 
 
 // Variables globales
@@ -43,25 +43,6 @@ io.on('connection', (socket) => {
     }, 5000);
 });
 
-function runCommand(command, options = {}) {
-    try {
-        console.log(`Exécution : ${command}`);
-        execSync(command, { stdio: 'inherit', ...options });
-    } catch (error) {
-        console.error(`Erreur lors de l'exécution : ${error.message}`);
-        process.exit(1);
-    }
-}
-
-function executeCommand(command, callback) {
-    exec(command, (error, stdout, stderr) => {
-        if (error) {
-            callback(`Erreur: ${stderr}`);
-        } else {
-            callback(stdout);
-        }
-    });
-}
 
 // Route pour exécuter une action
 app.get('/run-action/:action', async (req, res) => {
@@ -211,15 +192,6 @@ async function installSymfony() {
 
 }
 
-async function serveur(port = 8000) {
-    process.chdir(folderRelServeur);
-    const open = await import('open');
-    open.default(`http://localhost:${port}`);
-
-    // runCommand('php -S localhost:8088 -t public');
-    runCommand(`symfony server:start --port=${port}`);
-}
-
 
 function installScssTs() {
     process.chdir(folderRelServeur);
@@ -293,8 +265,6 @@ function installScssTs() {
     console.log('🚀 Renommage et mise à jour des références terminés avec succès !');
 
 
-
-
     runCommand(`php bin/console sass:build --watch`);
     runCommand(`php bin/console typescript:build --watch`);
     runCommand(`php bin/console asset-map:compile`);
@@ -302,12 +272,65 @@ function installScssTs() {
 
 }
 
+function runCommand(command, options = {}) {
+    try {
+        console.log(`Exécution : ${command}`);
+        execSync(command, { stdio: 'inherit', ...options });
+    } catch (error) {
+        console.error(`Erreur lors de l'exécution : ${error.message}`);
+        process.exit(1);
+    }
+}
 
+function executeCommand(command, callback) {
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            callback(`Erreur: ${stderr}`);
+        } else {
+            callback(stdout);
+        }
+    });
+}
+
+
+// Adapter en fonction du système d'exploitation
+function openTerminal(command) {
+    const platform = process.platform;
+
+    if (platform === 'win32') {
+        // Windows (CMD)
+        spawn('cmd.exe', ['/c', `start cmd.exe /k "${command}"`], { shell: true });
+        // spawn('powershell.exe', ['-NoExit', '-Command', command], { shell: true });
+    } else if (platform === 'darwin') {
+        // macOS (Terminal)
+        spawn('osascript', ['-e', `tell application "Terminal" to do script "${command}"`]);
+    } else if (platform === 'linux') {
+        // Linux (GNOME Terminal)
+        spawn('gnome-terminal', ['--', 'bash', '-c', command]);
+    } else {
+        console.error('Système d\'exploitation non supporté');
+    }
+}
+
+
+
+async function serveur(port = 8000) {
+    process.chdir(folderRelServeur);
+
+    // Lancer la commande dans un nouveau terminal
+    openTerminal(`symfony server:start --port=${port}`);
+    // runCommand('php -S localhost:8088 -t public');
+    // runCommand();
+
+    const open = await import('open');
+    open.default(`http://localhost:${port}`);
+}
 
 
 // Démarrage du serveur
 app.listen(port, async () => {
     console.log(`Server running at http://localhost:${port}`);
+    console.log('\x1b]8;;http://localhost:' + port + '\x1b\\Clique ici pour ouvrir le serveur\x1b]8;;\x1b\\');
     // Ouvrir le navigateur sur l'URL de localhost dès que le serveur démarre
     try {
         const open = await import('open');
