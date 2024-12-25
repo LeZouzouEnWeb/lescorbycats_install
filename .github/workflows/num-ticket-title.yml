@@ -28,18 +28,14 @@ jobs:
               const newTitle = `Ticket_${prNumber} ${prTitle}`;
               console.log(`Updating PR Title to: ${newTitle}`);
 
-              // Vérifiez si l'API 'github.rest.pulls.update' existe avant de l'utiliser
-              if (github.rest && github.rest.pulls && github.rest.pulls.update) {
-                await github.rest.pulls.update({
-                  owner: '${{ github.repository_owner }}',
-                  repo: '${{ github.event.repository.name }}',
-                  pull_number: prNumber,
-                  title: newTitle
-                });
-                console.log(`PR title updated to: ${newTitle}`);
-              } else {
-                console.log('Error: github.rest.pulls.update is not available.');
-              }
+              // Utilisation correcte de l'API GitHub
+              await github.pulls.update({
+                owner: '${{ github.repository_owner }}',
+                repo: '${{ github.event.repository.name }}',
+                pull_number: prNumber,
+                title: newTitle
+              });
+              console.log(`PR title updated to: ${newTitle}`);
             } else {
               console.log('The title already contains a ticket number.');
             }
