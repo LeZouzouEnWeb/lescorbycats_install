@@ -14,3 +14,4 @@ serveur-backend/
 deploy
 database/*
 !database/sql/
+*/node_modules/

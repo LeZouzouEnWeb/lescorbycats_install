@@ -2,7 +2,7 @@
 # Exectute > chmod +x ./play_wp.sh && ./play_wp.sh
 clear
 
-layout="$PWD/install"
+layout="$PWD/install Ubuntu"
 source "$layout/variables.sh"
 
 docker-desktop() {

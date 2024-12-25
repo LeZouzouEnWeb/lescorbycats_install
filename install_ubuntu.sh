@@ -3,7 +3,7 @@
 clear
 sudo test
 
-layout="$PWD/install"
+layout="$PWD/install Ubuntu"
 source "$layout/variables.sh"
 
 chmod +x "$layout/script-init.sh"

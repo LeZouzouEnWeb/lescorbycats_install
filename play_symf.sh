@@ -2,7 +2,7 @@
 # Exectute > chmod +x ./play_symf.sh && ./play_symf.sh
 clear
 
-layout="$PWD/install"
+layout="$PWD/install Ubuntu"
 source "$layout/variables.sh"
 docker-desktop() {
     /opt/docker-desktop/bin/docker-desktop
