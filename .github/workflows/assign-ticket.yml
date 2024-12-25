@@ -56,7 +56,7 @@ jobs:
 
             // Fonction pour extraire le numéro de ticket du titre
             function extractTicketNumber(title) {
-              const pattern = /Ticket[\s_]+(\d+)/i;
+              const pattern = /\[Ticket_\d+\]/i;
               const match = title.match(pattern);
               return match ? match[1] : null;
             }
