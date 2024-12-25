@@ -19,6 +19,7 @@ const { spawn } = require('child_process');
 // Variables globales
 const folderServeur = "serveur-frontend";
 const folderRelServeur = process.env.folder_rel_serveur || path.join(__dirname, '..', folderServeur);
+const backupFolder = folderRelServeur + '_backup';
 const folderRelBase = process.env.folder_rel_serveur || path.join(__dirname, '..');
 // const folderRelServeur = process.env.folder_rel_serveur || path.resolve(__dirname, '../folderServeur');
 
@@ -89,7 +90,19 @@ app.get('/run-action/:action', async (req, res) => {
 async function installSymfony() {
     console.log('Installation de Symfony');
     if (fs.existsSync(folderRelServeur)) {
-        fs.rmdirSync(path.join(folderRelServeur), { recursive: true });
+        // fs.rmdirSync(path.join(folderRelServeur), { recursive: true });
+        // Étapes
+        try {
+            // 1. Vider le dossier en conservant certains fichiers/dossiers
+            cleanFolder(folderRelServeur, ['.git', '.vscode', '.github']);
+
+            // 2. Renommer le dossier
+            renameFolder(folderRelServeur, backupFolder);
+
+            console.log('✅ Opérations terminées avec succès.');
+        } catch (err) {
+            console.error('❌ Une erreur est survenue :', err);
+        }
     }
     if (!fs.existsSync(folderRelServeur)) {
         fs.mkdirSync(folderRelServeur, { recursive: true });
@@ -98,6 +111,11 @@ async function installSymfony() {
 
 
     runCommand(`composer create-project symfony/skeleton:"${versionSymfony}" ${folderServeur}`);
+    // 3. Copier le contenu du dossier renommé dans le dossier d'origine
+    if (fs.existsSync(backupFolder)) {
+        copyFolderContent(backupFolder, folderRelServeur);
+        fs.rmdirSync(path.join(backupFolder), { recursive: true });
+    }
 
     process.chdir(folderRelServeur);
 
@@ -264,12 +282,9 @@ function installScssTs() {
 
     console.log('🚀 Renommage et mise à jour des références terminés avec succès !');
 
-
     runCommand(`php bin/console sass:build --watch`);
     runCommand(`php bin/console typescript:build --watch`);
     runCommand(`php bin/console asset-map:compile`);
-
-
 }
 
 function runCommand(command, options = {}) {
@@ -314,6 +329,59 @@ function openTerminal(command) {
 
 
 
+// Fonction pour vider un dossier tout en conservant certains fichiers/dossiers
+function cleanFolder(folderPath, keepList) {
+    if (!fs.existsSync(folderPath)) {
+        console.warn(`⚠️ Le dossier "${folderPath}" n'existe pas.`);
+        return;
+    }
+
+    fs.readdirSync(folderPath).forEach(item => {
+        const itemPath = path.join(folderPath, item);
+        const isDirectory = fs.statSync(itemPath).isDirectory();
+
+        if (!keepList.includes(item)) {
+            if (isDirectory) {
+                fs.rmSync(itemPath, { recursive: true, force: true });
+            } else {
+                fs.unlinkSync(itemPath);
+            }
+            console.log(`🗑️ Supprimé : ${itemPath}`);
+        }
+    });
+}
+
+// Fonction pour renommer un dossier
+function renameFolder(oldPath, newPath) {
+    if (fs.existsSync(newPath)) {
+        fs.rmSync(newPath, { recursive: true, force: true });
+        console.log(`🔄 Dossier existant supprimé : ${newPath}`);
+    }
+
+    fs.renameSync(oldPath, newPath);
+    console.log(`📁 Dossier renommé de "${oldPath}" à "${newPath}"`);
+}
+
+// Fonction pour copier le contenu d'un dossier vers un autre
+function copyFolderContent(src, dest) {
+    if (!fs.existsSync(dest)) {
+        fs.mkdirSync(dest, { recursive: true });
+    }
+
+    fs.readdirSync(src).forEach(item => {
+        const srcPath = path.join(src, item);
+        const destPath = path.join(dest, item);
+
+        if (fs.statSync(srcPath).isDirectory()) {
+            copyFolderContent(srcPath, destPath);
+        } else {
+            fs.copyFileSync(srcPath, destPath);
+        }
+        console.log(`📦 Copié : ${srcPath} → ${destPath}`);
+    });
+}
+
+
 async function serveur(port = 8000) {
     process.chdir(folderRelServeur);
 
@@ -330,7 +398,6 @@ async function serveur(port = 8000) {
 // Démarrage du serveur
 app.listen(port, async () => {
     console.log(`Server running at http://localhost:${port}`);
-    console.log('\x1b]8;;http://localhost:' + port + '\x1b\\Clique ici pour ouvrir le serveur\x1b]8;;\x1b\\');
     // Ouvrir le navigateur sur l'URL de localhost dès que le serveur démarre
     try {
         const open = await import('open');
