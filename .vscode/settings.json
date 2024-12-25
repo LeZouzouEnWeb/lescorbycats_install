@@ -1,4 +1,9 @@
 {
   "commentTranslate.source": "Google",
-  "twiggy.framework": "ignore"
+  "twiggy.framework": "ignore",
+  "cSpell.words": [
+    "lescorbycats",
+    "symfonycasts",
+    "Wamp"
+  ]
 }
