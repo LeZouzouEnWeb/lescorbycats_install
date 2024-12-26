@@ -21,13 +21,19 @@
 <body class="d-flex flex-column justify-content-center" style="align-items: center;">
     <h1>Menu d'installation</h1>
     <div class="d-flex flex-column" style="max-width:700px">
-        <button type="button" class="btn btn-secondary mb-1" onclick="runAction('C')" hidden>Créer un nouveau Build (Docker)</button>
-        <button type="button" class="btn btn-secondary mb-1" onclick="runAction('R')" hidden>Recréer les containers (compose up)</button>
+        <h2>Symfony</h2>
         <button type="button" class="btn btn-secondary mb-1" onclick="runAction('I')">Nouvelle Installation Symfony(tout supprimer et tout recréer)</button>
         <button type="button" class="btn btn-secondary mb-1" onclick="runAction('S')">Installation TypeScript et Scss</button>
+        <h2>WordPress</h2>
+        <button type="button" class="btn btn-secondary mb-1" onclick="runAction('P')">Nouvelle Installation WordPress(tout supprimer et tout recréer)</button>
+        <h2>Docker</h2>
+        <button type="button" class="btn btn-secondary mb-1" onclick="runAction('C')" hidden>Créer un nouveau Build (Docker)</button>
+        <button type="button" class="btn btn-secondary mb-1" onclick="runAction('R')" hidden>Recréer les containers (compose up)</button>
         <button type="button" class="btn btn-secondary mb-1" onclick="runAction('D')" hidden>Recréer des containers avec DB reset</button>
         <button type="button" class="btn btn-secondary mb-1" onclick="runAction('B')" hidden>Rebuild (supprimer les anciennes images et recréer le Build)</button>
+        <h2>Serveurs</h2>
         <button type="button" class="btn btn-secondary mb-1" onclick="runAction('L')">Lancer le serveur Symfony</button>
+        <button type="button" class="btn btn-secondary mb-1" onclick="runAction('W')">Lancer le serveur WordPress</button>
         <!-- <button type="button" class="btn btn-secondary mb-1" onclick="runAction('Q')">Quitter</button> -->
     </div>
     <div id="output"></div>

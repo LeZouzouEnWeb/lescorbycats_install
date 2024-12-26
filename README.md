@@ -10,6 +10,17 @@
 - [Scoop](https://scoop.sh/)
 - [Symfony CLI](https://symfony.com/download)
 
+NOTE
+
+METTRE LES DOSSIERS
+
+- SYMFONY
+- COMPOSER
+- NODEJS
+- NVM
+- NPM
+ DANS LES VARIABLES d'environnement
+
 ### Persister la connexion Git avec Github
 
 ```bash
