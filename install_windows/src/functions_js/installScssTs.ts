@@ -1,12 +1,13 @@
 import fs from 'fs';
 import { runCommand } from "./command";
-import { folderRelServeur } from "./variables";
+import { folderRelServeurFront } from './variables';
+
 
 /**
  * Installe SCSS et TypeScript en ajustant les fichiers et configurations nécessaires.
  */
 export function installScssTs(): void {
-    process.chdir(folderRelServeur);
+    process.chdir(folderRelServeurFront);
 
     // Chemins des fichiers
     const appJsPath: string = 'assets/app.js';

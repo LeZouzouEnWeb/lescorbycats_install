@@ -16,11 +16,11 @@ if %i% NEQ 1 (
         @REM Installer Express si ce n'est pas déjà installé
         if 1 == 1 (
             echo Installation en cours...
-            npm i express socket.io yaml fs
+            npm i express socket.io yaml fs node-notifier open child_process uuid
 
             if 1 == 1 (
                 echo Installation des dépendances dev...
-                npm i --save-dev typescript nodemon concurrently @types/node @types/yaml
+                npm i --save-dev typescript nodemon concurrently @types/node @types/yaml @types/node-notifier
 
                 @REM Lancer le script Node.js
                 echo Démarrage de l'application Node.js...

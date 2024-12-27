@@ -1,8 +1,8 @@
 import path from "path";
-import { runCommand } from "./command";
+import { runCommand, runCommandWithLogs } from "./command";
 import { cleanFolder, copyFolderContent, renameFolder } from "./folders";
-import { backupFolder, folderRelBase, folderRelServeur, folderServeur, versionSymfony } from "./variables";
-
+import { backupFolder, folderRelBase, folderRelServeurFront, folderServeurFront, versionSymfony } from "./variables";
+import { Server } from 'socket.io';
 import express, { Express } from 'express';
 import yaml from 'yaml';
 import fs from 'fs';
@@ -11,6 +11,7 @@ import http from 'http';
 // Initialisation des serveurs
 const app: Express = express();
 const server: http.Server = http.createServer(app);
+const io = new Server(server);
 
 
 interface WorkerConfig {
@@ -35,36 +36,35 @@ export async function installSymfony(): Promise<void> {
     console.log('Installation de Symfony');
 
     // Étape 1 : Nettoyage et sauvegarde
-    if (fs.existsSync(folderRelServeur)) {
+    if (fs.existsSync(folderRelServeurFront)) {
         try {
-            cleanFolder(folderRelServeur, ['.git', '.vscode', '.github']);
-            renameFolder(folderRelServeur, backupFolder);
+            cleanFolder(folderRelServeurFront, ['.git', '.vscode', '.github']);
+            renameFolder(folderRelServeurFront, backupFolder);
             console.log('✅ Opérations terminées avec succès.');
         } catch (err) {
             console.error('❌ Une erreur est survenue :', err);
         }
     }
 
-    if (!fs.existsSync(folderRelServeur)) {
-        fs.mkdirSync(folderRelServeur, { recursive: true });
+    if (!fs.existsSync(folderRelServeurFront)) {
+        fs.mkdirSync(folderRelServeurFront, { recursive: true });
     }
 
     process.chdir(folderRelBase);
 
-    runCommand(`composer create-project symfony/skeleton:"${versionSymfony}" ${folderServeur}`);
+    runCommandWithLogs(`composer`, [`create-project`, ` symfony/skeleton:"${versionSymfony}" ${folderServeurFront}`], io);
 
     if (fs.existsSync(backupFolder)) {
-        copyFolderContent(backupFolder, folderRelServeur);
+        copyFolderContent(backupFolder, folderRelServeurFront);
         fs.rmdirSync(path.join(backupFolder), { recursive: true });
     }
 
-    process.chdir(folderRelServeur);
-
-    runCommand('composer require phpstan/phpdoc-parser:^1.32 --with-all-dependencies');
-    runCommand('composer require symfony/property-info --with-all-dependencies');
-    runCommand('composer require webapp');
-    runCommand('composer require symfonycasts/sass-bundle');
-    runCommand('composer require sensiolabs/typescript-bundle');
+    process.chdir(folderRelServeurFront);
+    runCommandWithLogs('composer require', ['phpstan/phpdoc-parser:^1.32', ' --with-all-dependencies'], io);
+    runCommandWithLogs('composer require', ['symfony/property-info', ' --with-all-dependencies'], io);
+    runCommandWithLogs('composer require', ['webapp'], io);
+    runCommandWithLogs('composer require', ['symfonycasts/sass-bundle'], io);
+    runCommandWithLogs('composer require', ['sensiolabs/typescript-bundle'], io);
 
     // Gestion de .symfony.local.yaml
     let filePath: string = '.symfony.local.yaml';

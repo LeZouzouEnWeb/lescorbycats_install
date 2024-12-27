@@ -1,5 +1,5 @@
 import { openTerminal } from './command';
-import { folderRelServeur, folderRelServeurBack } from './variables';
+import { folderRelServeurBack, folderRelServeurFront } from './variables';
 import open from 'open';
 
 
@@ -14,7 +14,7 @@ import open from 'open';
 export async function lancementServeur(serveur: string, port: number = 8000): Promise<void> {
     if (serveur === "front") {
         // Changer le répertoire de travail vers le dossier du serveur frontend
-        process.chdir(folderRelServeur);
+        process.chdir(folderRelServeurFront);
         // Ouvrir un nouveau terminal pour démarrer le serveur Symfony
         openTerminal(`symfony server:start --port=${port}`);
     } else {

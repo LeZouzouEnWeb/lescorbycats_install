@@ -1,4 +1,35 @@
 import { exec, execSync, spawn } from "child_process";
+import { Server } from 'socket.io';
+
+/**
+ * Exécute une commande avec diffusion des logs en temps réel via Socket.IO.
+ * @param command - La commande à exécuter.
+ * @param args - Les arguments de la commande.
+ * @param io - Instance de Socket.IO pour envoyer les logs.
+ */
+export function runCommandWithLogs(command: string, args: string[], io: Server): void {
+    console.log(`Exécution (temps réel) : ${command} ${args.join(' ')}`);
+
+    const process = spawn(command, args, { shell: true });
+
+    process.stdout.on('data', (data) => {
+        const message = `[stdout] ${data.toString()}`;
+        console.log(message);
+        io.emit('consoleMessage', message); // Envoie les logs au frontend
+    });
+
+    process.stderr.on('data', (data) => {
+        const message = `[stderr] ${data.toString()}`;
+        console.error(message);
+        io.emit('consoleMessage', message); // Envoie les erreurs au frontend
+    });
+
+    process.on('close', (code) => {
+        const message = `Process terminé avec le code ${code}`;
+        console.log(message);
+        io.emit('consoleMessage', message); // Informe la fin du processus
+    });
+}
 
 /**
  * Exécute une commande de manière synchrone.

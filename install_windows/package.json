@@ -2,6 +2,7 @@
   "name": "install_windows",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "type": "commonjs",
   "scripts": {
     "dev": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/index.js\"",
     "start": "tsc && node dist/index.js"
@@ -10,15 +11,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "child_process": "^1.0.2",
     "express": "^4.21.2",
     "fs": "^0.0.1-security",
+    "node-notifier": "^10.0.1",
     "open": "^10.1.0",
     "socket.io": "^4.8.1",
+    "uuid": "^11.0.3",
     "yaml": "^2.6.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.2",
+    "@types/node-notifier": "^8.0.5",
     "@types/yaml": "^1.9.6",
     "concurrently": "^9.1.0",
     "nodemon": "^3.1.9",
