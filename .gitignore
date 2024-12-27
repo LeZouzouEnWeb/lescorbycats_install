@@ -3,8 +3,7 @@
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
-serveur-frontend/
-serveur-backend/
+serveur-*/
 /public/bundles/
 /var/
 /vendor/
@@ -16,3 +15,4 @@ database/*
 !database/sql/
 */node_modules/
 /node_modules/
+*/dist/
