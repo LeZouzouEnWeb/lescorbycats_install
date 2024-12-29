@@ -8,8 +8,7 @@ import { lancementServeur } from './functions_js/lancementServeur';
 import { folderRelBase, port, portBackend, portFrontend } from './functions_js/variables';
 import { createEnvBase } from './functions_js/file_env';
 import { Server } from 'socket.io';
-import { createDockerCompose } from './functions_js/docker-compose';
-import { SoftwareManager } from './functions_js/ouverture_fichier';
+import { createDockerCompose, dockerManager } from './functions_js/docker';
 import { runCommandWithLogs } from './functions_js/command';
 
 // Initialisation de l'application Express et du serveur HTTP
@@ -82,21 +81,14 @@ app.get('/run-action/:action', async (req: Request, res: Response): Promise<void
                 console.log('Installation de docker-compose');
                 // createEnvBase('data');
                 createDockerCompose();
-
-                // Exemple d'utilisation avec Docker Desktop
-                const dockerManager = new SoftwareManager({
-                    name: 'Docker Desktop',
-                    executableName: 'Docker Desktop.exe',
-                    executablePath: 'C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe',
-                    downloadUrl: 'https://www.docker.com/products/docker-desktop/',
-                    readyCommand: 'docker info'
-                });
-
                 await dockerManager.run().catch((err: any) => console.error(err));
                 process.chdir(folderRelBase);
                 await runCommandWithLogs('docker-compose', ['up', '-d'], io);
                 break;
-
+            case 'DKLT':
+                console.log('Ouverture de Docker');
+                await dockerManager.run().catch((err: any) => console.error(err));
+                break;
 
             case 'LS':
                 console.log('Lancement du  serveur Symfony');

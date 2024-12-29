@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import { folderDatabase, folderRelBase } from './variables';
+import { SoftwareManager } from './ouverture_fichier';
+import { folderRelBase } from './variables';
 import { createFiles } from './folder_file';
 
 
@@ -59,3 +59,11 @@ export function createDockerCompose() {
     // Écriture du fichier
     createFiles(folderRelBase, 'docker-compose.yml', dockerComposeContent);
 }
+
+export const dockerManager = new SoftwareManager({
+    name: 'Docker Desktop',
+    executableName: 'Docker Desktop.exe',
+    executablePath: 'C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe',
+    downloadUrl: 'https://www.docker.com/products/docker-desktop/',
+    readyCommand: 'docker info'
+});

@@ -127,7 +127,7 @@ APP_SECRET='${securityKeys.APP_SECRET}'
 # DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=8.0.32&charset=utf8mb4"
 # DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
 # DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=16&charset=utf8"
-DATABASE_URL="mysql://\${MYSQL_USER_API}:\${MYSQL_PASSWORD_API}@\${MYSQL_HOST}:\${SQL_DOCKER_PORT}/\${MYSQL_DATABASE}?serverVersion=\${MARIADB_VERSION}-MariaDB&charset=utf8mb4"
+DATABASE_URL="mysql://\${MYSQL_USER_API}:\${MYSQL_PASSWORD_API}@\${DB_HOST}:\${SQL_LOCALHOST_PORT}/\${MYSQL_DATABASE}?serverVersion=\${MARIADB_VERSION}-MariaDB&charset=utf8mb4"
 ###< doctrine/doctrine-bundle ###
 
 
@@ -159,11 +159,11 @@ DB_HOST='localhost'
 DB_PREFIX='wp_'
 WP_ENV='development'
 WP_HOME="http://\${DB_HOST}:\${HTTP_LOCALHOST_PORT}"
-WP_SITEURL="\${WP_HOME}/"
+WP_SITEURL="\${WP_HOME}/wp"
 
 WP_DEBUG_LOG='/journal/debug.log'
 
-DATABASE_URL="mysql://\${MYSQL_USER}:\${MYSQL_PASSWORD}@\${MYSQL_HOST}:\${SQL_DOCKER_PORT}/\${MYSQL_DATABASE}?serverVersion=\${MARIADB_VERSION}-MariaDB&charset=utf8mb4"
+DATABASE_URL="mysql://\${MYSQL_USER}:\${MYSQL_PASSWORD}@\${DB_HOST}:\${SQL_LOCALHOST_PORT}/\${MYSQL_DATABASE}?serverVersion=\${MARIADB_VERSION}-MariaDB&charset=utf8mb4"
 
 AUTH_KEY='${securityKeys.AUTH_KEY}'
 SECURE_AUTH_KEY='${securityKeys.SECURE_AUTH_KEY}'
