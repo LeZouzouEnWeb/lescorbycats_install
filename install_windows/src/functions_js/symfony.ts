@@ -1,5 +1,5 @@
 import path from "path";
-import { runCommand, runCommandWithLogs } from "./command";
+import { runCommandWithLogs } from "./command";
 import { cleanFolder, copyFolderContent, renameFolder } from "./folders";
 import { backupFolder, folderRelBase, folderRelServeurFront, folderServeurFront, versionSymfony } from "./variables";
 import { Server } from 'socket.io';
@@ -52,7 +52,7 @@ export async function installSymfony(): Promise<void> {
 
     process.chdir(folderRelBase);
 
-    runCommandWithLogs(`composer`, [`create-project`, ` symfony/skeleton:"${versionSymfony}" ${folderServeurFront}`], io);
+    await runCommandWithLogs(`composer`, [`create-project`, ` symfony/skeleton:"${versionSymfony}" ${folderServeurFront}`], io);
 
     if (fs.existsSync(backupFolder)) {
         copyFolderContent(backupFolder, folderRelServeurFront);
@@ -60,11 +60,11 @@ export async function installSymfony(): Promise<void> {
     }
 
     process.chdir(folderRelServeurFront);
-    runCommandWithLogs('composer require', ['phpstan/phpdoc-parser:^1.32', ' --with-all-dependencies'], io);
-    runCommandWithLogs('composer require', ['symfony/property-info', ' --with-all-dependencies'], io);
-    runCommandWithLogs('composer require', ['webapp'], io);
-    runCommandWithLogs('composer require', ['symfonycasts/sass-bundle'], io);
-    runCommandWithLogs('composer require', ['sensiolabs/typescript-bundle'], io);
+    await runCommandWithLogs('composer require', ['phpstan/phpdoc-parser:^1.32', ' --with-all-dependencies'], io);
+    await runCommandWithLogs('composer require', ['symfony/property-info', ' --with-all-dependencies'], io);
+    await runCommandWithLogs('composer require', ['webapp'], io);
+    await runCommandWithLogs('composer require', ['symfonycasts/sass-bundle'], io);
+    await runCommandWithLogs('composer require', ['sensiolabs/typescript-bundle'], io);
 
     // Gestion de .symfony.local.yaml
     let filePath: string = '.symfony.local.yaml';

@@ -2,34 +2,48 @@ import { exec, execSync, spawn } from "child_process";
 import { Server } from 'socket.io';
 
 /**
- * Exécute une commande avec diffusion des logs en temps réel via Socket.IO.
+ * Exécute une commande avec diffusion des logs en temps réel via Socket.IO et attend sa fin.
  * @param command - La commande à exécuter.
  * @param args - Les arguments de la commande.
  * @param io - Instance de Socket.IO pour envoyer les logs.
+ * @returns Une promesse résolue lorsque la commande est terminée.
  */
-export function runCommandWithLogs(command: string, args: string[], io: Server): void {
-    console.log(`Exécution (temps réel) : ${command} ${args.join(' ')}`);
+export function runCommandWithLogs(command: string, args: string[], io: Server): Promise<void> {
+    return new Promise((resolve, reject) => {
+        console.log(`Exécution (séquentielle) : ${command} ${args.join(' ')}`);
 
-    const process = spawn(command, args, { shell: true });
+        const process = spawn(command, args, { shell: true });
 
-    process.stdout.on('data', (data) => {
-        const message = `[stdout] ${data.toString()}`;
-        console.log(message);
-        io.emit('consoleMessage', message); // Envoie les logs au frontend
-    });
+        process.stdout.on('data', (data) => {
+            const message = `[stdout] ${data.toString()}`;
+            console.log(message);
+            io.emit('consoleMessage', message);
+        });
 
-    process.stderr.on('data', (data) => {
-        const message = `[stderr] ${data.toString()}`;
-        console.error(message);
-        io.emit('consoleMessage', message); // Envoie les erreurs au frontend
-    });
+        process.stderr.on('data', (data) => {
+            const message = `[stderr] ${data.toString()}`;
+            console.error(message);
+            io.emit('consoleMessage', message);
+        });
 
-    process.on('close', (code) => {
-        const message = `Process terminé avec le code ${code}`;
-        console.log(message);
-        io.emit('consoleMessage', message); // Informe la fin du processus
+        process.on('close', (code) => {
+            const message = `Process terminé avec le code ${code}`;
+            console.log(message);
+            io.emit('consoleMessage', message);
+
+            if (code === 0) {
+                resolve();
+            } else {
+                reject(new Error(`Commande échouée avec le code ${code}`));
+            }
+        });
+
+        process.on('error', (error) => {
+            reject(error);
+        });
     });
 }
+
 
 /**
  * Exécute une commande de manière synchrone.

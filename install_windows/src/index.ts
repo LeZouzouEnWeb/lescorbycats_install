@@ -10,7 +10,7 @@ import { createEnvBase } from './functions_js/file_env';
 import { Server } from 'socket.io';
 import { createDockerCompose } from './functions_js/docker-compose';
 import { SoftwareManager } from './functions_js/ouverture_fichier';
-import { runCommand, runCommandWithLogs } from './functions_js/command';
+import { runCommandWithLogs } from './functions_js/command';
 
 // Initialisation de l'application Express et du serveur HTTP
 const app = express();

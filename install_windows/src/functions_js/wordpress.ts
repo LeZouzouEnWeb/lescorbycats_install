@@ -1,10 +1,15 @@
 import path from "path";
-import { openTerminal } from "./command";
+import { runCommandWithLogs } from "./command";
 import { cleanFolder, copyFolderContent, renameFolder } from "./folders";
 import { backupFolderBack, folderRelBase, folderRelServeurBack, folderServeurBack } from "./variables";
-
+import { Server } from 'socket.io';
+import express, { Express } from 'express';
 import fs from 'fs';
+import http from 'http';
 
+const app: Express = express();
+const server: http.Server = http.createServer(app);
+const io = new Server(server);
 /**
  * Installe WordPress en utilisant Bedrock.
  */
@@ -33,7 +38,7 @@ export async function installWordpress(): Promise<void> {
     process.chdir(folderRelBase);
 
     // 3. Créer un projet WordPress avec Composer
-    openTerminal(`composer create-project roots/bedrock ./${folderServeurBack}`);
+    await runCommandWithLogs(`composer create-project`, [`roots/bedrock`, ` ${folderServeurBack}`], io);
 
     // 4. Copier le contenu du dossier de sauvegarde
     if (fs.existsSync(backupFolderBack)) {

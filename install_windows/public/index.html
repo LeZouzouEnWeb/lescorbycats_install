@@ -14,9 +14,20 @@
       const logContainer = document.getElementById("log");
 
       socket.on("consoleMessage", (message) => {
-        const logElement = document.createElement("div");
-        logElement.textContent = message;
-        logContainer.appendChild(logElement);
+
+
+        const regex = /\[stderr\]\s+\w+\s+Downloading/; // Regex pour capturer le modèle du message
+        const firstChild = logContainer.firstChild;
+
+        if (regex.test(message) && firstChild && regex.test(firstChild.textContent)) {
+          // Si le premier message correspond au modèle, remplace-le
+          firstChild.textContent = message;
+        } else {
+        // Sinon, ajoute un nouveau message en haut
+          const logElement = document.createElement("div");
+          logElement.textContent = message;
+          logContainer.prepend(logElement);
+        }
       });
 
       // Fonction pour écouter le clic sur le bouton de fermeture
@@ -41,14 +52,20 @@
   </script>
 
   <style>
+    body:not(#log){
+      background-color: #0a0a0a;
+      color: #a4a6a7;
+    }
     #log {
       width: calc(45vw - 15px);
-      height: calc(100% - 40px);
+      height: 80vh;
       border: 1px solid #000;
       white-space: pre-wrap;
       overflow-y: scroll;
       font-family: monospace;
       margin-left: 15px;
+      background-color: #4d4d4d;
+      color: aliceblue;
     }
     #log div {
       border-bottom: 1px solid #bfbfbf;
@@ -56,7 +73,7 @@
       padding: 5px;
     }
     #log div:nth-child(even) {
-      background: #fffed9;
+      background: #5b5a3d;
     }
     .log, .menu{
       max-width: 45vw;
